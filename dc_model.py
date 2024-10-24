@@ -5,7 +5,7 @@ import pinn.networks
 import tensorflow as tf
 import numpy as np
 
-from pinn.layers import atomic_dress
+from pinn.utils import atomic_dress
 from pinn.utils import pi_named
 
 default_params = {
@@ -42,7 +42,7 @@ def dc_model(params, **kwargs):
 
     if isinstance(params, str):
         model_dir = params
-        assert tf.gfile.Exists('{}/params.yml'.format(model_dir)),\
+        assert tf.io.gfile.Exists('{}/params.yml'.format(model_dir)),\
             "Parameters files not found."
         with FileIO(os.path.join(model_dir, 'params.yml'), 'r') as f:
             params = yaml.load(f, Loader=yaml.Loader)
@@ -51,9 +51,9 @@ def dc_model(params, **kwargs):
         yaml.Dumper.ignore_aliases = lambda *args: True
         to_write = yaml.dump(params)
         params_path = os.path.join(model_dir, 'params.yml')
-        if not tf.gfile.IsDirectory(model_dir):
-            tf.gfile.MakeDirs(model_dir)
-        if tf.gfile.Exists(params_path):
+        if not tf.io.gfile.IsDirectory(model_dir):
+            tf.io.gfile.MakeDirs(model_dir)
+        if tf.io.gfile.Exists(params_path):
             original = FileIO(params_path, 'r').read()
             if original != to_write:
                 os.rename(params_path, params_path+'.' +
