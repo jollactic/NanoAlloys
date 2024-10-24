@@ -1,0 +1,11 @@
+model_dir: model/dc_test
+model_params:
+  learning_rate: 0.0003
+network: pinet
+network_params:
+  atom_types:
+  - 28
+  - 78
+  basis_type: gaussian
+  depth: 3
+  rc: 3.5
