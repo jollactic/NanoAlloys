@@ -42,7 +42,7 @@ def dc_model(params, **kwargs):
 
     if isinstance(params, str):
         model_dir = params
-        assert tf.io.gfile.Exists('{}/params.yml'.format(model_dir)),\
+        assert tf.io.gfile.exists('{}/params.yml'.format(model_dir)),\
             "Parameters files not found."
         with FileIO(os.path.join(model_dir, 'params.yml'), 'r') as f:
             params = yaml.load(f, Loader=yaml.Loader)
@@ -53,7 +53,7 @@ def dc_model(params, **kwargs):
         params_path = os.path.join(model_dir, 'params.yml')
         if not tf.io.gfile.IsDirectory(model_dir):
             tf.io.gfile.MakeDirs(model_dir)
-        if tf.io.gfile.Exists(params_path):
+        if tf.io.gfile.exists(params_path):
             original = FileIO(params_path, 'r').read()
             if original != to_write:
                 os.rename(params_path, params_path+'.' +
